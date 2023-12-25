@@ -4,14 +4,13 @@ import { ACCORDIAN_DATA as accordianData} from '../src/utils/data'
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
      <Accordian 
      data = {accordianData}
-     defaultOpen = {2}
-     />
+    //  defaultOpen = {4}
+     /> 
     </>
   )
 }

@@ -7,7 +7,7 @@ export const ACCORDIAN_DATA = [
         {
           title: 'Section 2',
           subtitle: 'Subtitle for Section 2',
-          content: 'Content for Section 2. This can be different from the content in Section 1.',
+          content: 'Content for Section 2. This can be different from the content in Section 2.',
         },
         {
           title: 'Section 3',
