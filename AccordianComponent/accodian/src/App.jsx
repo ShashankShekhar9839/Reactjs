@@ -9,7 +9,7 @@ function App() {
     <>
      <Accordian 
      data = {accordianData}
-    //  defaultOpen = {4}
+     defaultOpen = {4}
      /> 
     </>
   )

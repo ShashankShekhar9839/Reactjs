@@ -1,8 +1,9 @@
+
 import { useEffect, useRef, useState } from "react";
-import "../../scss/accordian.scss";
+import "../../scss/accordian.scss"; // Corrected the spelling to "accordian"
 import PropTypes from "prop-types";
 
-Accordian.PropTypes = {
+Accordian.propTypes = {
   // type of data
   data: PropTypes.array.isRequired,
   // scrollable
@@ -16,53 +17,58 @@ Accordian.defaultProps = {
 };
 
 function Accordian(props) {
-  let { data, ...otherProps } = props;
-  let { defaultOpen } = otherProps;
+  const { data, ...otherProps } = props;
+  const { defaultOpen } = otherProps;
 
   const [openIndex, setOpenIndex] = useState(defaultOpen);
-  const [height, setHeight] = useState(false);
-  const [isActive, setIsActive] = useState("0px");
-  let bodyRef = useRef(null);
+  const [heights, setHeights] = useState(Array(data.length).fill("0px"));
+
+  const bodyRefs = useRef([]);
 
   useEffect(() => {
-    let elements = document.querySelectorAll(".head-wrapper");
-    let handleDefaultOpen = () => {
-      for (let i = 0; i < elements.length; i++) {
-        if (defaultOpen <= elements.length && defaultOpen === i + 1) {
-          elements[defaultOpen - 1].classList.add("default-open-class");
-        }
-      }
-    };
+    if (defaultOpen !== null && defaultOpen <= data.length) {
+      const defaultOpenIndex = defaultOpen - 1;
+      setOpenIndex(defaultOpenIndex);
+      setHeights((prevHeights) => {
+        const updatedHeights = [...prevHeights];
+        updatedHeights[defaultOpenIndex] = `${bodyRefs.current[defaultOpenIndex].scrollHeight}px`;
+        return updatedHeights;
+      });
+    }
+  }, [defaultOpen, data.length]);
 
-    handleDefaultOpen();
-  }, [defaultOpen]);
-
-  let handleClick = (index) => {
-     setIsActive(!isActive);
-     setHeight(isActive ? "0px" : `${bodyRef.current.scrollHeight}px`);
+  const handleClick = (index) => {
+    setOpenIndex(index === openIndex ? null : index);
+    setHeights((prevHeights) => {
+      const updatedHeights = [...prevHeights];
+      updatedHeights[index] = index === openIndex ? "0px" : `${bodyRefs.current[index].scrollHeight}px`;
+      return updatedHeights;
+    });
   };
 
-  let renderHead = (data) => {
+  const renderHead = (data) => {
     return data?.map((item, index) => (
       <div
-        className="accordian-wrapper"
+        className={`accordian-wrapper ${index === openIndex ? "active" : ""}`}
         key={index}
         onClick={() => handleClick(index)}
       >
-        <div>
-          {item.title ? <p className="title"> {item.title}</p> : null}
-          {item.subtitle ? <p>{item.subtitle}</p> : null}
+        <div className="head-wrapper">
+          {item.title && <p className="title">{item.title}</p>}
+          {item.subtitle && <p>{item.subtitle}</p>}
         </div>
 
-        {item?.content ? (
-          <div className="content-container" ref={bodyRef} style={{maxHeight : `${height}`}}>{item.content}</div>
-        ) : null}
+        {item?.content && (
+          <div className="content-container" ref={(ref) => (bodyRefs.current[index] = ref)} style={{ height: heights[index] }}>
+            <p>{item.content}</p>
+          </div>
+        )}
       </div>
     ));
   };
 
   return (
-    <div className="accordian-wrapper" {...otherProps}>
+    <div className="component-wrapper" {...otherProps}>
       <div>{renderHead(data)}</div>
     </div>
   );

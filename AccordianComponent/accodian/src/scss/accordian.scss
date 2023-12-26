@@ -4,11 +4,12 @@
     box-sizing: border-box;
 }
 .accordian-wrapper {
-    border-top: 1px solid black;
-    padding: 10px 5px; 
+    border-bottom: 1px solid black;
 
-    &:hover {
+
+    &:hover, .active {
         cursor: pointer;
+        background-color: #ccc;
     }
 
     .title {
@@ -19,4 +20,18 @@
 
 .default-open-class {
     background-color: red;
+}  
+
+.content-container {
+    overflow: hidden;
+    transition: height 0.6s ease;
+    background-color: #fff;
+} 
+
+.head-wrapper {
+    background-color: gray;
+    background-color: #eee;
+    color: #444;
+    padding: 30px 20px;
+
 }
