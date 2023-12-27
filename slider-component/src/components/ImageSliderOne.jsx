@@ -26,10 +26,10 @@ const ImageSliderOne = ({imageUrls}) => {
         <div className="image-slider-wrapper">
             <img src={`${imageUrls[activeIndex]}`}/> 
             <button className="right-btn" onClick={handleRightClick}>
-            <ArrowRight size={32} color="red" />
+            <ArrowRight size={32} color="white" />
             </button>
-            <button className="left-btn" onClick={handleRightClick}>
-            <ArrowLeft size={32} color="red" />
+            <button className="left-btn" onClick={handleLeftClick}>
+            <ArrowLeft size={32} color="white" />
             </button>
         </div>
     )
