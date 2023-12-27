@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+.image-slider-wrapper {
+  unset: all;
+  max-width: 1200px;
+  width: 500px;
+  height: 600px;
+  position: relative;
+
+  img {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    aspect-ratio: (16/9);
+  }
+
+  button {
+    position: absolute;
+    top: 220px;
+    background-color: black;
+    // opacity: 0.5;
+  }
+  .left-btn {
+    left: -40px;
+  }
+  .right-btn {
+    right: -40px;
+  }
+}

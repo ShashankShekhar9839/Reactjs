@@ -1,0 +1,3 @@
+export const IMAGE_URLS = [
+    'https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg', 'https://images.pexels.com/photos/248687/pexels-photo-248687.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'https://images.pexels.com/photos/3156482/pexels-photo-3156482.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'https://images.pexels.com/photos/315952/pexels-photo-315952.jpeg?auto=compress&cs=tinysrgb&w=600' , 'https://images.pexels.com/photos/14330589/pexels-photo-14330589.jpeg?auto=compress&cs=tinysrgb&w=600'
+]
