@@ -6,20 +6,16 @@ const ImageSliderOne = ({imageUrls}) => {
     let [activeIndex, setActiveIndex] = useState(0);
     
    let handleRightClick = () => {
-    if(activeIndex === imageUrls.length -1) {
-        setActiveIndex(0);
-    }
-    else {
-        setActiveIndex(activeIndex + 1);
-    }
+       setActiveIndex(index => {
+        if(index === imageUrls.length - 1) return 0; 
+        return index + 1;
+       })
    } 
     let handleLeftClick = () => {
-        if(activeIndex === 0) {
-            setActiveIndex(imageUrls.length-1);
-        }
-        else {
-            setActiveIndex(activeIndex - 1);
-        }
+         setActiveIndex(index => {
+            if(index === 0) return imageUrls.length - 1;
+            return index - 1;
+         })
     }
 
     return (
