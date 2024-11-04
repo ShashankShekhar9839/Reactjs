@@ -1,13 +1,14 @@
 import "./App.css";
 import Notes from "./components/Notes";
 import data from "../src/data/data";
+import { useState } from "react";
 
 function App() {
+  const [notes, setNotes] = useState(data);
+
   return (
     <>
-     {data.map((item) => (
-        <Notes note={item.text} key={item.id}/>
-      ))}
+      <Notes notes={notes} setNotes = {setNotes}/>
     </>
   );
 }

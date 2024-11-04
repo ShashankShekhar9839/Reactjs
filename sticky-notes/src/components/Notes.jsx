@@ -1,48 +1,75 @@
-import { useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
+import Note from "./Note";
 
-function Notes ({note}) {
-   const [isDragging, setIsDragging] = useState(false);
-   const [position, setPosition] = useState({x:0, y:0});
-   const [offset, setOffset] = useState({x:0, y:0});
+function Notes({ notes = [], setNotes = () => {} }) {
+  const [isDragging, setIsDragging] = useState(false);
 
-   const handleMouseDown = event => {
-    setIsDragging(true);
-    setOffset({
-        x: event.clientX - position.x, 
-        y: event.clientY - position.y
-    })
-   } 
+  useEffect(() => {
+       const savedNotes = [];
 
-   const handleMouseMove = event => {
-    if(isDragging) {
-    console.log('dsfds');
+       const updateNotes = notes.map((note) => {
+        const savedNote = null;
+        if(savedNote) {
+          return;
+        }
+        else {
+          const position = determineNewPosition();
+          return {...note, position}
+        }
+       })
 
-        setPosition({
-            x: event.clientX - offset.x,
-            y: event.clientY - offset.y
-        })
+       setNotes(updateNotes);
+}, [notes.length])
+
+  const noteRefs = useRef([]);
+
+  const determineNewPosition = () => {
+    const maxX = window.innerWidth - 300;
+    const maxY = window.innerHeight - 100;
+    
+    return {
+      x: Math.floor(Math.random() * maxX),
+      y: Math.ceil(Math.random() * maxY)
     }
-   }
+  }
 
-   const handleMouseUp = () => {
-    setIsDragging(false);
-   }
+  const handleMouseDown = (e, note) => {
+    if(note.id) {
+      setIsDragging(true);
+    } 
+  }
 
-    return (
-        <div className="notes-wrapper" 
-        style={{
-            left: position.x,
-            top: position.y,
-            cursor: 'move',
-            position: 'absolute'
-        }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        >
-         {note}
-        </div>
-    )
-} 
+  const handleMouseMove = (e, note) => {
+    if(isDragging) {
+      const deltaX = e.movementX;
+      const deltaY = e.movementY;
+      for(let i=0;i<notes.length;i++) {
+        if(notes[i].id === note.id) {
+          noteRefs.current[note.id].style.position = deltaX;
+          note.position.y = deltaY; 
+        }
+      }
+    }
+  }
+
+  return <>
+      {notes.map((note, index)=> {
+        return (
+            <Note
+            key={note.id}
+            content = {note.text}
+            ref={
+              noteRefs.current[note.id]
+                ? noteRefs.current[note.id]
+                : (noteRefs.current[note.id] = createRef())
+            }
+            initialPosition = {note.position}
+            onMouseDown= {(e) => handleMouseDown(e, note)}
+            onMouseMove= {(e) => handleMouseMove(e, note)}
+            />
+        )
+    })}
+  </>;
+}
 
 export default Notes;
