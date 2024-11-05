@@ -1,7 +1,11 @@
 import React from "react";
 import "../css/skillList.css";
 
-const SkillList: React.FC = ({ children }) => {
+interface SkillsListProps {
+  children?: any;
+}
+
+const SkillList: React.FC<SkillsListProps> = ({ children }) => {
   return <div className="skill-list">{children}</div>;
 };
 
