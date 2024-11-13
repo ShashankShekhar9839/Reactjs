@@ -3,15 +3,11 @@ import "./App.css";
 import Button from "./components/Button";
 
 function App() {
-  let [step, setStep] = useState(0);
+  let [step, setStep] = useState(1);
   let [count, setCount] = useState(0);
 
   const date = new Date();
-  const adjustedDate = new Date(date);
-  adjustedDate.setDate(date.getDate() + count);
-  const dayName = adjustedDate.toLocaleDateString("en-US", { weekday: "long" });
-
-  const days = count > 0 ? count : -1 * count;
+  date.setDate(date.getDate() + count);
 
   const handleStepIncreament = () => {
     setStep((prevStep) => prevStep + 1);
@@ -24,16 +20,10 @@ function App() {
   };
 
   const handleCountIncreament = () => {
-    if (step === 0) {
-      alert("steps are 0, you can not move zero step, increase your steps");
-    }
     setCount((prevCount) => prevCount + step);
   };
 
   const handleCountDecrement = () => {
-    if (step === 0) {
-      alert("steps are 0, you can not move zero step, increase your steps");
-    }
     setCount((prevCount) => prevCount - step);
   };
 
@@ -56,7 +46,14 @@ function App() {
       </div>
       <div>
         <h3>
-          {days} {days > 0 ? "days from" : "days ago"} from Today is {dayName}{" "}
+          <span>
+            {count === 0
+              ? "Today is "
+              : count > 0
+              ? `${count} days from Today is `
+              : `${Math.abs(count)} days ago was `}
+          </span>
+          <span>{date.toDateString()}</span>
         </h3>
       </div>
     </>
