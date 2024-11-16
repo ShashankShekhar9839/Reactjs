@@ -1,0 +1,19 @@
+.flashcard-wrapper {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin: 10px;
+  flex: 1 1 calc(25.333%);
+  height: 200px;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: black;
+  color: white;
+}
