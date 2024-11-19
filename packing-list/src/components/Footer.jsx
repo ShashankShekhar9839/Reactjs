@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/footer.css";
 
-const Footer = ({ items }) => {
+const Footer = ({ items, onClear }) => {
   const totalItems = items.length;
   const packedItems = items.filter((item) => item.packed).length;
   const percentagePacked =
@@ -10,6 +10,9 @@ const Footer = ({ items }) => {
   return (
     <div className="footer">
       {`You have ${totalItems} items in your list, and you have already packed ${packedItems} items... (${percentagePacked}%)`}
+      <button className="clear-btn" onClick={onClear}>
+        Clear
+      </button>
     </div>
   );
 };

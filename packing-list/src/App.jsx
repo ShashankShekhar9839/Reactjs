@@ -24,6 +24,10 @@ function App() {
     );
   };
 
+  const handleClear = () => {
+    setItems([]);
+  };
+
   useEffect(() => {
     console.log(items);
   }, [items]);
@@ -37,7 +41,7 @@ function App() {
         onDeleteItem={handleDeleteItem}
         onItemToggle={handleCheckedItem}
       />
-      <Footer items={items} />
+      <Footer items={items} onClear={handleClear} />
     </div>
   );
 }
