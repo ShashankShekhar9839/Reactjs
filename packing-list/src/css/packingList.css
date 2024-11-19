@@ -1,0 +1,8 @@
+.packingList-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgb(152, 218, 231);
+}
