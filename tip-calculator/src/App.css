@@ -1,0 +1,19 @@
+.bill-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.app-container {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+input {
+  height: 20px;
+  padding: 4px;
+}
