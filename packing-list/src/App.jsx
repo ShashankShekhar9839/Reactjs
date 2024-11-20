@@ -1,8 +1,8 @@
+import { useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Form from "./components/Form";
 import PackingList from "./components/PackingList";
-import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
 
 function App() {
