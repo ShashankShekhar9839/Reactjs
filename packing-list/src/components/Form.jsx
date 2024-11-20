@@ -33,7 +33,12 @@ const Form = ({ addItem }) => {
               </option>
             ))}
           </select>
-          <input type="text" value={description} onChange={handleInputChange} />
+          <input
+            type="text"
+            value={description}
+            onChange={handleInputChange}
+            placeholder="add item"
+          />
           <button>Add Item</button>
         </div>
       </form>
