@@ -10,9 +10,6 @@ const Footer = ({ items, onClear }) => {
   return (
     <div className="footer">
       {`You have ${totalItems} items in your list, and you have already packed ${packedItems} items... (${percentagePacked}%)`}
-      <button className="clear-btn" onClick={onClear}>
-        Clear
-      </button>
     </div>
   );
 };

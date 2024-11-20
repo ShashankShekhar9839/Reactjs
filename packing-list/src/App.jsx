@@ -28,10 +28,6 @@ function App() {
     setItems([]);
   };
 
-  useEffect(() => {
-    console.log(items);
-  }, [items]);
-
   return (
     <div style={{ margin: "auto" }}>
       <Header />
@@ -40,8 +36,9 @@ function App() {
         itemList={items}
         onDeleteItem={handleDeleteItem}
         onItemToggle={handleCheckedItem}
+        onClear={handleClear}
       />
-      <Footer items={items} onClear={handleClear} />
+      <Footer items={items} />
     </div>
   );
 }
