@@ -2,7 +2,9 @@ import React from "react";
 
 const Button = ({ children, onClick }) => {
   const handleClick = () => {
-    onClick();
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (

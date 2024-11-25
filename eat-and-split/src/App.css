@@ -84,3 +84,8 @@ ul {
   width: 100%;
   justify-content: flex-end;
 }
+
+.selected {
+  border-color: green;
+  border: 2px solid;
+}
