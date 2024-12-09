@@ -4,11 +4,14 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import Error from "./components/Error";
 import Loader from "./components/Loader";
+import StartScreen from "./components/StartScreen";
+import Question from "./components/Question";
 
 const initialState = {
   questions: [],
   // loading, error, ready, active, finished
   status: "loading",
+  index: 0,
 };
 
 function reducer(state, action) {
@@ -18,7 +21,10 @@ function reducer(state, action) {
     }
 
     case "dataFailed": {
-      return { ...state, status: "dataFailed" };
+      return { ...state, status: "error" };
+    }
+    case "start": {
+      return { ...state, status: "active" };
     }
     default:
       throw new Error("Unknow Action");
@@ -26,7 +32,10 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(() => {
     fetch("http://localhost:8000/questions")
@@ -40,14 +49,20 @@ function App() {
       .catch((err) => dispatch({ type: "dataFailed" }));
   }, []);
 
+  const totalQuestions = questions?.length;
+
   return (
     <>
       <Header />
       <Main>
-        {status === "dataFailed" && (
+        {status === "error" && (
           <Error errorMessage="Error In Laoding quiz..." />
         )}
         {status === "loading" && <Loader />}
+        {status === "ready" && (
+          <StartScreen totalQuestions={totalQuestions} dispatch={dispatch} />
+        )}
+        {status === "active" && <Question question={questions[index]} />}
       </Main>
     </>
   );

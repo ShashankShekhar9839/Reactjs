@@ -21,3 +21,72 @@
   object-fit: cover;
   border-radius: 12px;
 }
+
+.main {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 30px;
+  display: flex;
+  margin: 30px auto;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+}
+
+.start-screen-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 400px;
+}
+
+.start-screen-wrapper button {
+  all: unset;
+  padding: 10px;
+  border: 1px solid rgb(146, 142, 142);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+.start-screen-wrapper button:hover {
+  color: white;
+  background-color: black;
+}
+
+.option-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.option {
+  all: unset;
+  padding: 10px;
+  border: 1px solid grey;
+  border-radius: 12px;
+  cursor: pointer;
+  flex-grow: 1;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.option:hover {
+  color: white;
+  background: black;
+  font-weight: bolder;
+}
+
+.question {
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+}
