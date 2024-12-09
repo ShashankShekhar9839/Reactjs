@@ -76,10 +76,14 @@
   flex-shrink: 0;
 }
 
-.option:hover {
+.answer {
   color: white;
   background: black;
   font-weight: bolder;
+}
+
+.option:disabled {
+  cursor: no-drop;
 }
 
 .question {
@@ -89,4 +93,14 @@
   align-items: center;
   flex-direction: column;
   gap: 16px;
+}
+
+.correct {
+  background-color: green;
+  color: white;
+}
+
+.wrong {
+  background-color: red;
+  color: white;
 }
