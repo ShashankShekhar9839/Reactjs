@@ -29,6 +29,7 @@
   display: flex;
   margin: 30px auto;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   padding: 30px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -103,4 +104,38 @@
 .wrong {
   background-color: red;
   color: white;
+}
+
+.progress {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 300px !important;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress progress {
+  width: 100%;
+}
+
+.progress div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.next-btn {
+  all: unset;
+  padding: 5px 20px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  position: relative;
+  bottom: 60px;
+  right: -120px;
+  cursor: pointer;
+}
+
+.next-btn:disabled {
+  color: gray;
 }

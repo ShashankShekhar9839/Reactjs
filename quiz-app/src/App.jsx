@@ -6,6 +6,8 @@ import Error from "./components/Error";
 import Loader from "./components/Loader";
 import StartScreen from "./components/StartScreen";
 import Question from "./components/Question";
+import Progress from "./components/Progress";
+import NextButton from "./components/NextButton";
 
 const initialState = {
   questions: [],
@@ -39,13 +41,16 @@ function reducer(state, action) {
             : state.points,
       };
     }
+    case "nextQuestion": {
+      return { ...state, index: state.index + 1, answer: null };
+    }
     default:
       throw new Error("Unknow Action");
   }
 }
 
 function App() {
-  const [{ questions, status, index, answer }, dispatch] = useReducer(
+  const [{ questions, status, index, answer, points }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -63,6 +68,10 @@ function App() {
   }, []);
 
   const totalQuestions = questions?.length;
+  const totalPoints = questions.reduce(
+    (total, question) => total + question.weightage,
+    0
+  );
 
   return (
     <>
@@ -76,11 +85,20 @@ function App() {
           <StartScreen totalQuestions={totalQuestions} dispatch={dispatch} />
         )}
         {status === "active" && (
-          <Question
-            question={questions[index]}
-            dispatch={dispatch}
-            answer={answer}
-          />
+          <>
+            <Progress
+              index={index}
+              totalQuestions={totalQuestions}
+              points={points}
+              totalPoints={totalPoints}
+            />
+            <Question
+              question={questions[index]}
+              dispatch={dispatch}
+              answer={answer}
+            />
+            <NextButton answer={answer} dispatch={dispatch} />
+          </>
         )}
       </Main>
     </>
