@@ -1,0 +1,159 @@
+{
+  "questions": [
+    {
+      "question": "What is React primarily used for?",
+      "options": [
+        "Building user interfaces",
+        "Handling database operations",
+        "Creating server-side applications",
+        "Designing graphic animations"
+      ],
+      "correctAnswer": 0,
+      "weightage": 5
+    },
+    {
+      "question": "Which method is used to create components in React?",
+      "options": [
+        "render()",
+        "createComponent()",
+        "React.createElement()",
+        "new Component()"
+      ],
+      "correctAnswer": 2,
+      "weightage": 5
+    },
+    {
+      "question": "What is JSX?",
+      "options": [
+        "A template language",
+        "A syntax extension for JavaScript",
+        "A stylesheet format",
+        "A server-side rendering tool"
+      ],
+      "correctAnswer": 1,
+      "weightage": 5
+    },
+    {
+      "question": "What does the useState hook do?",
+      "options": [
+        "Handles global state management",
+        "Manages the lifecycle of a component",
+        "Creates local state variables",
+        "Connects React components to Redux"
+      ],
+      "correctAnswer": 2,
+      "weightage": 4
+    },
+    {
+      "question": "What is the virtual DOM in React?",
+      "options": [
+        "A direct representation of the real DOM",
+        "A copy of the real DOM stored in memory",
+        "A backend system for database operations",
+        "A feature for routing between components"
+      ],
+      "correctAnswer": 1,
+      "weightage": 5
+    },
+    {
+      "question": "Which of the following is true about React components?",
+      "options": [
+        "Components can only be class-based",
+        "Components must use state",
+        "Components can be either class-based or functional",
+        "Components cannot have props"
+      ],
+      "correctAnswer": 2,
+      "weightage": 4
+    },
+    {
+      "question": "What is the purpose of React's key attribute?",
+      "options": [
+        "To uniquely identify a DOM node",
+        "To style components dynamically",
+        "To define event listeners",
+        "To create unique prop names"
+      ],
+      "correctAnswer": 0,
+      "weightage": 3
+    },
+    {
+      "question": "Which lifecycle method is called after a component is rendered?",
+      "options": [
+        "componentDidMount",
+        "componentWillUnmount",
+        "shouldComponentUpdate",
+        "render"
+      ],
+      "correctAnswer": 0,
+      "weightage": 5
+    },
+    {
+      "question": "What is the useEffect hook used for?",
+      "options": [
+        "Managing component styling",
+        "Handling side effects in components",
+        "Creating local state variables",
+        "Optimizing component performance"
+      ],
+      "correctAnswer": 1,
+      "weightage": 5
+    },
+    {
+      "question": "How can you pass data from a parent to a child component in React?",
+      "options": ["Using state", "Using context", "Using props", "Using hooks"],
+      "correctAnswer": 2,
+      "weightage": 4
+    },
+    {
+      "question": "What is the purpose of the React Fragment?",
+      "options": [
+        "To handle errors in components",
+        "To group a list of children without adding extra nodes to the DOM",
+        "To create lazy-loaded components",
+        "To manage global application state"
+      ],
+      "correctAnswer": 1,
+      "weightage": 3
+    },
+    {
+      "question": "What does React.memo do?",
+      "options": [
+        "Prevents unnecessary re-renders of functional components",
+        "Handles side effects",
+        "Manages application state",
+        "Handles animations"
+      ],
+      "correctAnswer": 0,
+      "weightage": 4
+    },
+    {
+      "question": "Which library is commonly used with React for state management?",
+      "options": ["Redux", "jQuery", "Bootstrap", "D3.js"],
+      "correctAnswer": 0,
+      "weightage": 3
+    },
+    {
+      "question": "What does React's strict mode do?",
+      "options": [
+        "Prevents runtime errors",
+        "Detects unsafe lifecycle methods and other potential issues",
+        "Improves performance",
+        "Enables server-side rendering"
+      ],
+      "correctAnswer": 1,
+      "weightage": 3
+    },
+    {
+      "question": "What is the purpose of React Portals?",
+      "options": [
+        "To create higher-order components",
+        "To render children into a DOM node outside the parent hierarchy",
+        "To optimize component rendering",
+        "To enable server-side rendering"
+      ],
+      "correctAnswer": 1,
+      "weightage": 4
+    }
+  ]
+}
