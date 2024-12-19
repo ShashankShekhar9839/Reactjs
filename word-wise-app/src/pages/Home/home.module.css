@@ -1,0 +1,35 @@
+.home {
+  height: calc(100vh - 56px);
+  width: 100%;
+  background: url("https://images.unsplash.com/photo-1499678329028-101435549a4e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+}
+
+.home h2 {
+  font-size: 40px;
+}
+
+.home p {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .home {
+    background-position: top;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .home h2 {
+    font-size: 30px;
+  }
+}
