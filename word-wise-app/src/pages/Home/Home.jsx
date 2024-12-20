@@ -1,6 +1,7 @@
 import React from "react";
 import PageNav from "../../components/PageNav/PageNav";
 import styles from "./home.module.css";
+import Button from "../../components/Button/Button";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
         Never forget your wonderful experiences, and show your friends how you
         have wandered the world.
       </p>
+      <Button label="START TRACKING NOW" />
     </div>
   );
 };
