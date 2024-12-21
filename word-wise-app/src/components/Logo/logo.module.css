@@ -1,0 +1,15 @@
+.logo {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.anchor {
+  color: rgb(4, 4, 4);
+  text-decoration: none;
+}
+
+.logo img {
+  height: 50px;
+  width: 50px;
+}
