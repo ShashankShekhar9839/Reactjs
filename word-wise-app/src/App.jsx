@@ -1,22 +1,28 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home";
-import Product from "../src/pages/Product/Product";
-import Pricing from "../src/pages/Pricing/Pricing";
-import PageNav from "../src/components/PageNav/PageNav";
+import AppRoutes from "./routes/AppRoutes";
 import "./App.css";
-import AppLayout from "./pages/AppLayout/AppLayout";
 
 function App() {
+  const [cities, setCities] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let res = await fetch("http://localhost:9000/cities");
+      let data = await res.json();
+      setCities(data);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+
   return (
     <>
       <BrowserRouter>
-        <PageNav />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product" element={<Product />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/app" element={<AppLayout />} />
-        </Routes>
+        <AppRoutes cityList={cities} />
       </BrowserRouter>
     </>
   );
