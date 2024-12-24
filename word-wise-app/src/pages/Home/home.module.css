@@ -17,6 +17,11 @@
   font-size: 40px;
 }
 
+.home a {
+  text-decoration: none;
+  color: white;
+}
+
 .home p {
   font-size: 20px;
   margin-top: 10px;
