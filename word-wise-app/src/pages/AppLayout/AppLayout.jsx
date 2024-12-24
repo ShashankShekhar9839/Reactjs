@@ -1,13 +1,14 @@
 import React from "react";
 import SideBar from "../../components/Sidebar/SideBar";
-import CityList from "../../components/CityList/CityList";
-import { Outlet } from "react-router-dom";
+import Map from "../../components/Map/Map";
+import User from "../../components/User/User";
 
 const AppLayout = () => {
   return (
     <div>
       <SideBar />
-       <Outlet/>
+      <Map />
+      <User />
     </div>
   );
 };

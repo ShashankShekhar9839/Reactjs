@@ -1,7 +1,12 @@
 import React from "react";
+import PageNav from "../../components/PageNav/PageNav";
 
 const Product = () => {
-  return <div>Product</div>;
+  return (
+    <div>
+      <PageNav />
+    </div>
+  );
 };
 
 export default Product;
