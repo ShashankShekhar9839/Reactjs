@@ -6,7 +6,7 @@ import usePost from "./context/usePost";
 
 const App = () => {
   const post = usePost();
-  console.log(post);
+
   return (
     <>
       <Header />
