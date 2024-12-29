@@ -1,22 +1,18 @@
-import React, { useRef, useState } from "react";
+import { useTimer } from "../context/TimerContext";
 
-const Stopwatch = () => {
-  const [time, setTime] = useState(0); // Stopwatch time in seconds
-  const intervalRef = useRef(null); // Ref to store the interval ID
+const Timer = () => {
+  const { time, startTimer, stopTimer } = useTimer();
 
   const handleMouseEnter = () => {
-    // Start the stopwatch if not already running
-    if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 10);
+    if (startTimer) {
+      startTimer();
     }
   };
 
   const handleMouseLeave = () => {
-    // Stop the stopwatch
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
+    if (stopTimer) {
+      stopTimer();
+    }
   };
 
   return (
@@ -40,7 +36,6 @@ const Stopwatch = () => {
   );
 };
 
-// Helper function to format time as HH:MM:SS
 const formatTime = (time) => {
   const milliseconds = Math.floor((time % 1000) / 10); // Get centiseconds
   const seconds = Math.floor((time / 1000) % 60); // Get seconds
@@ -55,4 +50,4 @@ const formatTime = (time) => {
   ].join(":");
 };
 
-export default Stopwatch;
+export default Timer;

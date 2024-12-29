@@ -1,14 +1,15 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState, useRef } from "react";
 
-let TimerContext = createContext();
+const TimerContext = createContext();
 
-const TimerProvider = ({ children }) => {
+export const TimerProvider = ({ children }) => {
   const [time, setTime] = useState(0); // Total time in milliseconds
   const intervalRef = useRef(null);
 
   const startTimer = () => {
     if (!intervalRef.current) {
       const startTime = Date.now() - time; // Resume from previous time
+      console.log(startTime);
       intervalRef.current = setInterval(() => {
         setTime(Date.now() - startTime);
       }, 10); // Update every 10ms
@@ -34,7 +35,9 @@ const TimerProvider = ({ children }) => {
 
 export const useTimer = () => {
   let context = useContext(TimerContext);
-  if (context === undefined) return;
+  if (context === undefined) {
+    throw new Error("useTimer must be used within a TimerProvider");
+  }
 
   return context;
 };
