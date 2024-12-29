@@ -9,7 +9,6 @@ export const TimerProvider = ({ children }) => {
   const startTimer = () => {
     if (!intervalRef.current) {
       const startTime = Date.now() - time; // Resume from previous time
-      console.log(startTime);
       intervalRef.current = setInterval(() => {
         setTime(Date.now() - startTime);
       }, 10); // Update every 10ms
