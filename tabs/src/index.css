@@ -3,3 +3,37 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.nav-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  flex-wrap: nowrap;
+  overflow: scroll;
+  scrollbar-width: none;
+}
+
+.nav-wrapper li {
+  list-style: none;
+  cursor: pointer;
+  padding: 5px 0px;
+  flex-grow: 1;
+}
+
+.nav-wrapper li:hover {
+  background-color: aliceblue;
+}
+
+.active {
+  color: teal;
+  border-bottom: 2px solid teal;
+  background-color: aliceblue;
+}
+
+.content-wrapper {
+  padding: 10px;
+}
+
+.tabs-container {
+  padding: 10px;
+}

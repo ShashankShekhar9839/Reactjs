@@ -1,7 +1,7 @@
 import React from "react";
 
-const TabsPane = () => {
-  return <div></div>;
+const TabsPane = ({ children }) => {
+  return <div>{children}</div>;
 };
 
 export default TabsPane;
