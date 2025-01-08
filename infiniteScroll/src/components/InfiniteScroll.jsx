@@ -16,10 +16,10 @@ const InfiniteScroll = () => {
 
   // Update the `data` state when `response` changes
   useEffect(() => {
-    console.log("###", response);
     if (response?.products) {
       setData((prevData) => [...prevData, ...response.products]);
       setHasMore(response.products.length > 0); // Check if there's more data
+      console.log(data);
     }
   }, [response]);
 
@@ -30,11 +30,18 @@ const InfiniteScroll = () => {
 
       if (observer.current) observer.current.disconnect();
 
+      const options = {
+        root: null, // Use the viewport as the root
+        rootMargin: "0px 0px 100px 0px", // Trigger when the element is 100px from the bottom of the viewport
+        threshold: 0.3, // Trigger when the element is 100% visible
+      };
+
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
+          console.log("#### call made again");
           setPage((prevPage) => prevPage + 1);
         }
-      });
+      }, options);
 
       if (node) observer.current.observe(node);
     },
