@@ -1,14 +1,10 @@
 import React from "react";
-import boxConfig from "./config";
+import TicTacToe from "./components/TicTacToe";
 
 const App = () => {
   return (
     <div className="wrapper">
-      {boxConfig.map((item) => {
-        return item.map((cell) => {
-          return <button></button>;
-        });
-      })}
+      <TicTacToe />
     </div>
   );
 };
