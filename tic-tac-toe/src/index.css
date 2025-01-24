@@ -1,0 +1,10 @@
+button {
+  height: 30px;
+  width: 30px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0px;
+}
