@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.game-wrapper input {
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.grid-container {
+  padding: 10px;
+  margin-top: 40px;
+}
+
+.grid-container span {
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid gray;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.flipped {
+  background-color: rgb(49, 179, 230);
+  color: white;
+}
+
+.solved {
+  background-color: rgb(49, 216, 49);
+  color: white;
+}
+
+.reset-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  max-width: 300px;
+}
+
+.reset-container button {
+  padding: 5px;
+  cursor: pointer;
+}
