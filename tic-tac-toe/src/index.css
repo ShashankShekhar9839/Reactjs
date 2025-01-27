@@ -1,0 +1,35 @@
+.container {
+  max-width: calc(3 * 100px);
+  margin: 20px auto;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  font-size: 36px;
+  border: 1px solid gray;
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.cell:hover {
+  background-color: #fff;
+}
+
+.status {
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.reset-button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
