@@ -1,0 +1,20 @@
+button {
+  all: unset;
+  border: 1px solid gray;
+  padding: 3px;
+  margin-right: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.folder-container {
+  max-width: fit-content;
+  border: 1px solid gainsboro;
+  margin-bottom: 5px;
+}
+.folder-name {
+  margin-right: 10px;
+  font-size: 18px;
+  height: 100%;
+  padding: 3px;
+}
