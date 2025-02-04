@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import StickyNotes from "./components/StickyNotes";
+import initialNotes from "./data/notes";
 
 const App = () => {
-  return <div>App</div>;
+  const [notes, setNotes] = useState(initialNotes);
+  return (
+    <div>
+      <StickyNotes notes={notes} setNotes={setNotes} />
+    </div>
+  );
 };
 
 export default App;
