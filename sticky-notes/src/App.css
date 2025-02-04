@@ -1,0 +1,8 @@
+.note {
+  padding: 10px;
+  border: 1px solid gray;
+  width: fit-content;
+  background-color: lightyellow;
+  border-radius: 2px;
+  position: absolute;
+}
