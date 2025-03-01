@@ -14,7 +14,7 @@ const App = () => {
         Show Success Toast
       </button>
       <button
-        onClick={() => addToast("Error message!", "error")}
+        onClick={() => addToast("Error message!", "error", 8000)}
         className="bg-red-500 text-white p-2 rounded ml-2"
       >
         Show Error Toast
