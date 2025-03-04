@@ -1,0 +1,87 @@
+/* Root Variables for Reusable Colors */
+:root {
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
+  --light: #f8f9fa;
+  --dark: #343a40;
+}
+
+/* Base Button Styling */
+.custom-button {
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover and Click Effects */
+.custom-button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.custom-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Size Variants */
+.small {
+  font-size: 10px;
+  padding: 4px 12px;
+}
+
+.medium {
+  font-size: 12px;
+  padding: 8px 24px;
+}
+
+.large {
+  font-size: 16px;
+  padding: 14px 28px;
+}
+
+/* Color Variants */
+.primary {
+  background: var(--primary);
+}
+
+.secondary {
+  background: var(--secondary);
+}
+
+.success {
+  background: var(--success);
+}
+
+.danger {
+  background: var(--danger);
+}
+
+.warning {
+  background: var(--warning);
+  color: black;
+}
+
+.info {
+  background: var(--info);
+}
+
+.light {
+  background: var(--light);
+  color: black;
+}
+
+.dark {
+  background: var(--dark);
+}
