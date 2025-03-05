@@ -7,14 +7,11 @@ import Popup from "./Popup";
 import { BoardContext } from "../context/context";
 
 const Sidebar = () => {
-  const blankBoard = {
-    name: "",
-    list: [],
-  };
+
 
   const [collapsed, setCollapsed] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [boardData, setBoardData] = useState(blankBoard);
+
   const { allBoard, setAllBoard } = useContext(BoardContext);
 
   const handleClick = () => {
@@ -31,13 +28,7 @@ const Sidebar = () => {
     setAllBoard(newBoard);
   };
 
-  const addBoard = () => {
-    let newBoard = { ...allBoard };
-    newBoard.boards.push(boardData);
-    setAllBoard(newBoard);
-    setBoardData(blankBoard);
-    setShowPopup(false);
-  };
+
 
   return (
     <>

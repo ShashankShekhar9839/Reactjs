@@ -1,6 +1,9 @@
 .list-container {
   display: flex;
   margin: 10px;
+  position: relative;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .list-name {
@@ -16,7 +19,9 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
   width: 250px;
   border-radius: 12px;
+  height: auto;
   overflow: hidden;
+  align-self: flex-start;
 }
 
 .card-btn-container {

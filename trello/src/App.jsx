@@ -16,7 +16,12 @@ const App = () => {
           {
             id: "1",
             title: "To do",
-            items: [{ id: makeId(6), title: "Project Description 1" }],
+            items: [
+              { id: makeId(6), title: "Project Description 1" },
+              { id: makeId(6), title: "Project Description 2" },
+              { id: makeId(6), title: "Project Description 3" },
+              { id: makeId(6), title: "Project Description 4" },
+            ],
           },
           {
             id: "2",
