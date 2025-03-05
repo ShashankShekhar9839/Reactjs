@@ -30,6 +30,27 @@ const App = () => {
           },
         ],
       },
+
+      {
+        name: "My Second Board",
+        list: [
+          {
+            id: "1",
+            title: "To do",
+            items: [{ id: makeId(6), title: "Project Description 1" }],
+          },
+          {
+            id: "2",
+            title: "In Progress",
+            items: [{ id: makeId(6), title: "Project Description 2" }],
+          },
+          {
+            id: "3",
+            title: "Done",
+            items: [{ id: makeId(6), title: "Project Description 3" }],
+          },
+        ],
+      },
     ],
   };
 

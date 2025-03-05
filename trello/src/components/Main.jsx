@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../css/main.css";
 import Card from "./Card";
 import Button from "./Button";
+import { BoardContext } from "../context/context";
 
 const Main = () => {
   const [showTextArea, setShowTextArea] = useState(false);
+  const { allBoard, setAllBoard } = useContext(BoardContext);
 
   const handleAddCardClick = () => {
     setShowTextArea(!showTextArea);
@@ -12,7 +14,7 @@ const Main = () => {
 
   return (
     <div className="main">
-      <h4>My Planer Board</h4>
+      <h4>{allBoard.boards[allBoard.active].name}</h4>
       <div className="list-container">
         <div className="list">
           <span className="list-name">To Do</span>

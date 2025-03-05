@@ -63,3 +63,11 @@
 .expand-btn:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+.board-names {
+  display: block;
+  margin: 6px 8px 0;
+  border-bottom: 1px solid grey;
+  padding: 8px 0;
+  cursor: pointer;
+}
