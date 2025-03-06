@@ -10,6 +10,19 @@
   border-bottom: 1px solid black;
   padding: 8px 8px;
   font-weight: bold;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.list-name-input {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
 }
 
 .list {

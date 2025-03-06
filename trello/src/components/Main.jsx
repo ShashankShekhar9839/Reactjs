@@ -11,6 +11,7 @@ const Main = () => {
   const [cardDetails, setCardDetails] = useState("");
   const [isAddNewList, setIsAddNewList] = useState(false);
   const [listName, setListName] = useState("");
+  const [editingList, setEditingList] = useState(null);
   const { allBoard, setAllBoard } = useContext(BoardContext);
 
   const boardData = allBoard.boards[allBoard.active];
@@ -84,6 +85,22 @@ const Main = () => {
     setIsAddNewList(true);
   };
 
+  const handleListNameChange = (index, value) => {
+    let newList = [...boardData.list];
+    newList[index].title = value;
+    let updatedBoard = { ...allBoard };
+    updatedBoard.boards[updatedBoard.active].list = newList;
+    setAllBoard(updatedBoard);
+  };
+
+  const handleListNameBlur = () => {
+    setEditingList(null); // Disable edit mode when focus is lost
+  };
+
+  const handleListNameEdit = (index) => {
+    setEditingList(index); // Enable edit mode for the selected list
+  };
+
   return (
     <div className="main">
       <h4>{allBoard.boards[allBoard.active].name}</h4>
@@ -111,7 +128,27 @@ const Main = () => {
                   {...provided.droppableProps}
                   className="list"
                 >
-                  <span className="list-name">{list.title}</span>
+                  {/* <span className="list-name">{list.title}</span> */}
+
+                  {editingList === listIndex ? (
+                    <input
+                      type="text"
+                      value={list.title}
+                      onChange={(e) =>
+                        handleListNameChange(listIndex, e.target.value)
+                      }
+                      onBlur={handleListNameBlur}
+                      autoFocus
+                      className="list-name-input"
+                    />
+                  ) : (
+                    <span
+                      className="list-name"
+                      onClick={() => handleListNameEdit(listIndex)} // Add this line
+                    >
+                      {list.title}
+                    </span>
+                  )}
 
                   {list.items.map((card, cardIndex) => (
                     <Draggable
