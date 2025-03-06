@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import "../css/main.css";
 import Card from "./Card";
@@ -38,6 +38,10 @@ const Main = () => {
     }));
   };
 
+  useEffect(() => {
+    console.log(showTextArea);
+  }, [showTextArea]);
+
   const handleListInputChange = (e) => {
     let listName = e.target.value;
     setListName(listName);
@@ -47,22 +51,19 @@ const Main = () => {
     setCardDetails(e.target.value);
   };
 
-  const cardData = (index) => {
+  const saveCard = (index) => {
+    if (!cardDetails) return;
     let newList = [...boardData.list];
     newList[index].items.push({ id: makeId(6), title: cardDetails });
     let updatedBoard = { ...allBoard };
     updatedBoard.boards[updatedBoard.active].list = newList;
     setAllBoard(updatedBoard);
-  };
-
-  const saveCard = (index) => {
-    if (!cardDetails) return;
-    cardData(index);
     setCardDetails("");
     setShowTextArea((prev) => ({ ...prev, [index]: false }));
   };
 
-  const listData = () => {
+  const saveList = () => {
+    if (!listName) return;
     let newList = [...boardData.list];
     newList.push({
       id: makeId(6),
@@ -72,11 +73,6 @@ const Main = () => {
     let board = { ...allBoard };
     board.boards[board.active].list = newList;
     setAllBoard(board);
-  };
-
-  const saveList = () => {
-    if (!listName) return;
-    listData();
     setListName("");
     setIsAddNewList(false);
   };
