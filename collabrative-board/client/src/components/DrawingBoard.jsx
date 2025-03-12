@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
 import { io } from "socket.io-client";
+import '../css/canvas.css'
 
-const socket = io("http://localhost:4000"); // Change this to your backend URL
+const socket = io("http://localhost:4000"); // Change to your backend URL
 
 const DrawingBoard = () => {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
   const [brushColor, setBrushColor] = useState("black");
   const [brushSize, setBrushSize] = useState(5);
+  const [isEraser, setIsEraser] = useState(false);
 
   useEffect(() => {
     const newCanvas = new fabric.Canvas(canvasRef.current);
@@ -33,13 +35,18 @@ const DrawingBoard = () => {
     };
   }, []);
 
-  // Update brush settings
+  // Update brush/eraser settings
   useEffect(() => {
     if (canvas) {
-      canvas.freeDrawingBrush.color = brushColor;
-      canvas.freeDrawingBrush.width = brushSize;
+      if (isEraser) {
+        canvas.freeDrawingBrush.color = "white"; // Erase effect
+        canvas.freeDrawingBrush.width = brushSize + 10; // Eraser is slightly bigger
+      } else {
+        canvas.freeDrawingBrush.color = brushColor;
+        canvas.freeDrawingBrush.width = brushSize;
+      }
     }
-  }, [brushColor, brushSize, canvas]);
+  }, [brushColor, brushSize, isEraser, canvas]);
 
   // Receive drawing updates from WebSocket
   useEffect(() => {
@@ -54,7 +61,7 @@ const DrawingBoard = () => {
     };
   }, [canvas]);
 
-  // Erase function
+  // Clear Canvas
   const clearCanvas = () => {
     if (canvas) {
       canvas.clear();
@@ -63,13 +70,14 @@ const DrawingBoard = () => {
   };
 
   return (
-    <div>
+    <div className="canvas-container">
       {/* Brush Controls */}
       <div>
         <label>Brush Color:</label>
         <input
           type="color"
           value={brushColor}
+          disabled={isEraser}
           onChange={(e) => setBrushColor(e.target.value)}
         />
 
@@ -81,6 +89,11 @@ const DrawingBoard = () => {
           value={brushSize}
           onChange={(e) => setBrushSize(Number(e.target.value))}
         />
+
+        {/* Eraser Toggle Button */}
+        <button onClick={() => setIsEraser(!isEraser)}>
+          {isEraser ? "Switch to Brush" : "Switch to Eraser"}
+        </button>
 
         <button onClick={clearCanvas}>Clear Canvas</button>
       </div>
