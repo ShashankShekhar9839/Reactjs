@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
 import { io } from "socket.io-client";
-import '../css/canvas.css'
+import "../css/canvas.css";
+import Button from "./Button";
 
 const socket = io("http://localhost:4000"); // Change to your backend URL
 
@@ -69,6 +70,16 @@ const DrawingBoard = () => {
     }
   };
 
+  const donwloadDrawing = () => {
+    if (canvas) {
+      const dataURL = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "drawing.png";
+      link.click();
+    }
+  };
+
   return (
     <div className="canvas-container">
       {/* Brush Controls */}
@@ -100,6 +111,7 @@ const DrawingBoard = () => {
 
       {/* Drawing Canvas */}
       <canvas ref={canvasRef} />
+      <Button onClick={donwloadDrawing}>DownLoad</Button>
     </div>
   );
 };
