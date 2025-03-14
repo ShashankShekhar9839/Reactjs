@@ -1,0 +1,56 @@
+.list-container {
+  display: flex;
+  margin: 10px;
+  position: relative;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.list-name {
+  border-bottom: 1px solid black;
+  padding: 8px 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.list-name-input {
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 4px;
+  width: 250px;
+  border-radius: 12px;
+  height: auto;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+.card-btn-container {
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  width: 90%;
+  margin-right: 10px;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.text-area-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 90%;
+  margin: 10px auto;
+}
