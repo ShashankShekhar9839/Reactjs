@@ -1,0 +1,14 @@
+.otp-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 2px;
+  margin: 100px;
+}
+
+.otp-wrapper input {
+  height: 30px;
+  width: 30px;
+  border-radius: 6px;
+}
