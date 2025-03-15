@@ -1,0 +1,5 @@
+.side-bar {
+  min-width: 300px;
+  height: calc(100vh - 56px);
+  border: 1px solid black;
+}
