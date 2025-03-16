@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
+import { useNotes } from "../contexts/notesContext";
 
-const NoteNamePopup = ({ note, setStoredValue, onClose }) => {
+const NoteNamePopup = ({ note, onClose }) => {
   const [noteName, setNoteName] = useState("");
+  const { setStoredNotes } = useNotes();
 
   const handleChange = (value) => {
     setNoteName(value);
@@ -18,7 +20,7 @@ const NoteNamePopup = ({ note, setStoredValue, onClose }) => {
       note: note,
     };
 
-    setStoredValue((prevNotes) => [...prevNotes, newNote]);
+    setStoredNotes((prevNotes) => [...prevNotes, newNote]);
     onClose();
   };
 

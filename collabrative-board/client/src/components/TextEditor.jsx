@@ -1,39 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { io } from "socket.io-client";
+import React, { useState } from "react";
 import Button from "./Button";
 import NoteNamePopup from "./NoteNamePopup";
-import useLocalStorage from "../hooks/useLocalStorage";
-import SideBar from "./SideBar";
-
-const socket = io("http://localhost:4000", { autoConnect: false });
+import { useTextEditor } from "../contexts/textEditorContext";
+import "../css/texteditor.css";
+import { useNotes } from "../contexts/notesContext";
 
 const TextEditor = () => {
-  const [text, setText] = useState("");
+  const { text, updateText } = useTextEditor();
+  const { setStoredNotes, activeNote } = useNotes();
+
   const [showFileNamePopup, setFileNamePopup] = useState(false);
-  const [storedValue, setStoredValue] = useLocalStorage("notes", []);
-
-  useEffect(() => {
-    console.log("Stored Notes:", storedValue);
-  }, [storedValue]);
-
-  useEffect(() => {
-    socket.connect();
-
-    socket.on("text-update", (newText) => {
-      setText(newText);
-    });
-
-    return () => {
-      socket.off("text-update");
-      socket.disconnect();
-    };
-  }, []);
-
-  const handleChange = (event) => {
-    const newText = event.target.value;
-    setText(newText);
-    socket.emit("text-update", newText);
-  };
 
   const downLoadNotes = () => {
     if (!text) return;
@@ -44,32 +20,44 @@ const TextEditor = () => {
     link.click();
   };
 
+  const handleUpdateClick = () => {
+    setStoredNotes((prev) =>
+      prev.map((note) =>
+        note.id === activeNote.id ? { ...note, note: text } : note
+      )
+    );
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "20px",
-      }}
-    >
-      <SideBar data={storedValue} setText={setText} />
+    <div className="text-area-container">
       <textarea
         value={text}
-        onChange={handleChange}
+        onChange={(e) => updateText(e.target.value)}
         rows="10"
         cols={50}
         placeholder="Start typing..."
       />
-      <div>
-        <Button onClick={downLoadNotes}>Download</Button>
-        <Button onClick={() => setFileNamePopup(true)}>Save to Browser</Button>
+      <div className="text-editor-btn-containers">
+        <h3>Save Everything!</h3>
+        <Button onClick={downLoadNotes} color="secondary" size="small">
+          Download
+        </Button>
+        <Button
+          onClick={() => setFileNamePopup(true)}
+          color="secondary"
+          size="small"
+        >
+          Save to Browser
+        </Button>
+        {activeNote && (
+          <Button color="secondary" size="small" onClick={handleUpdateClick}>
+            Update
+          </Button>
+        )}
       </div>
 
       {showFileNamePopup && (
-        <NoteNamePopup
-          note={text}
-          setStoredValue={setStoredValue}
-          onClose={() => setFileNamePopup(false)}
-        />
+        <NoteNamePopup note={text} onClose={() => setFileNamePopup(false)} />
       )}
     </div>
   );

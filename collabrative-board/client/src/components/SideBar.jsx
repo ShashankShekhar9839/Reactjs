@@ -1,35 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../css/sidebar.css";
+import { useNotes } from "../contexts/notesContext";
+import { useTextEditor } from "../contexts/textEditorContext";
 
-const SideBar = ({ selected, data, setText }) => {
+const SideBar = () => {
+  const { storedNotes, setActiveNote, activeNote } = useNotes();
+  const { updateText } = useTextEditor();
+
   const handleClick = (id) => {
-    const selectedNote = data.find((item) => item.id === id);
+    const selectedNote = storedNotes.find((item) => item.id === id);
     if (selectedNote) {
-      const noteText =
-        typeof selectedNote.note === "string"
-          ? selectedNote.note
-          : JSON.parse(selectedNote.note);
-
-      setText(noteText);
+      updateText(selectedNote.note);
+      setActiveNote(selectedNote);
     }
   };
 
+  useEffect(() => {
+    console.log(activeNote);
+  }, [activeNote]);
+
   return (
     <div className="side-bar">
-      Side Bar
-      {data.map((item, index) => {
-        return (
-          <h5
-            onClick={() => handleClick(item.id)}
-            style={{
-              background: "gray",
-              cursor: "pointer",
-            }}
-          >
-            {item.title}
-          </h5>
-        );
-      })}
+      <h3>Saved Notes</h3>
+      {storedNotes.map((item) => (
+        <span
+          className="saved-names"
+          key={item.id}
+          onClick={() => handleClick(item.id)}
+        >
+          {item.title}
+        </span>
+      ))}
     </div>
   );
 };
