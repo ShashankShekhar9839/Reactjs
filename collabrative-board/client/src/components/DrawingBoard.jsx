@@ -4,15 +4,17 @@ import { io } from "socket.io-client";
 import "../css/canvas.css";
 import Button from "./Button";
 import { useDrawing } from "../contexts/drawingContext";
+import NoteNamePopup from "./NoteNamePopup";
 
-const socket = io("http://localhost:4000"); // Change to your backend URL
+const socket = io("http://localhost:4000");
 
-const DrawingBoard = () => {
+const DrawingBoard = ({ selectedDrawing }) => {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
   const [brushColor, setBrushColor] = useState("black");
   const [brushSize, setBrushSize] = useState(5);
   const [isEraser, setIsEraser] = useState(false);
+  const [openSavePopup, setOpenSavePopup] = useState(false);
   const { drawingData, setDrawingData } = useDrawing();
 
   useEffect(() => {
@@ -38,51 +40,49 @@ const DrawingBoard = () => {
     };
   }, []);
 
-  // Update brush/eraser settings
+  // Load selected drawing
   useEffect(() => {
-    if (canvas) {
-      if (isEraser) {
-        canvas.freeDrawingBrush.color = "white"; // Erase effect
-        canvas.freeDrawingBrush.width = brushSize + 10; // Eraser is slightly bigger
-      } else {
-        canvas.freeDrawingBrush.color = brushColor;
-        canvas.freeDrawingBrush.width = brushSize;
-      }
-    }
-  }, [brushColor, brushSize, isEraser, canvas]);
-
-  // Receive drawing updates from WebSocket
-  useEffect(() => {
-    socket.on("drawing-update", (drawingData) => {
-      if (canvas) {
-        canvas.loadFromJSON(drawingData, canvas.renderAll.bind(canvas));
-      }
-    });
-
-    return () => {
-      socket.off("drawing-update");
-    };
-  }, [canvas]);
-
-  // Clear Canvas
-  const clearCanvas = () => {
-    if (canvas) {
+    if (canvas && selectedDrawing) {
       canvas.clear();
-      socket.emit("drawing-update", canvas.toJSON()); // Notify others
+      canvas.loadFromJSON(selectedDrawing.drawing, () => {
+        canvas.renderAll();
+      });
+    }
+  }, [selectedDrawing, canvas]);
+
+  // Enable eraser mode
+  const toggleEraser = () => {
+    if (!canvas) return;
+
+    if (!isEraser) {
+      // Activate eraser mode
+      canvas.isDrawingMode = true;
+      canvas.freeDrawingBrush.color = "white"; // Simulate erasing
+      canvas.freeDrawingBrush.width = brushSize + 10; // Slightly bigger eraser
+    } else {
+      // Switch back to normal brush mode
+      canvas.isDrawingMode = true;
+      canvas.freeDrawingBrush.color = brushColor;
+      canvas.freeDrawingBrush.width = brushSize;
+    }
+
+    setIsEraser(!isEraser);
+  };
+
+  // **NEW: Delete selected object**
+  const deleteSelectedObject = () => {
+    if (!canvas) return;
+
+    const activeObject = canvas.getActiveObject();
+    if (activeObject) {
+      canvas.remove(activeObject);
+      canvas.discardActiveObject();
+      canvas.requestRenderAll();
     }
   };
 
-  const donwloadDrawing = () => {
-    if (canvas) {
-      const dataURL = canvas.toDataURL("image/png");
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = "drawing.png";
-      link.click();
-    }
-  };
-
-  const saveDrawing = () => {
+  // **FIXED: Save Drawing**
+  const saveDrawing = (drawingName) => {
     if (!canvas) return;
 
     const drawingJSON = canvas.toJSON();
@@ -90,27 +90,34 @@ const DrawingBoard = () => {
       ...prev,
       {
         id: Date.now(),
-        name: "My Drawing",
+        name: drawingName,
         drawing: drawingJSON, // Save as JSON
       },
     ]);
+
+    setOpenSavePopup(false);
   };
 
-  const loadDrawing = () => {
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
-    const drawingData = localStorage.getItem("drawing");
+  // **FIXED: Download Drawing**
+  const downloadDrawing = () => {
+    if (canvas) {
+      // **Ensure latest render before downloading**
+      canvas.renderAll();
 
-    if (drawingData) {
-      const img = new Image();
-      img.src = drawingData;
-      img.onload = () => ctx.drawImage(img, 0, 0);
+      const dataURL = canvas.toDataURL({
+        format: "png",
+        quality: 1.0,
+      });
+
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "drawing.png";
+      link.click();
     }
   };
 
   return (
     <div className="canvas-main">
-      {/* Brush Controls */}
       <div className="canvas-container">
         <div className="canvas-controls">
           <label>Brush Color:</label>
@@ -129,23 +136,37 @@ const DrawingBoard = () => {
             value={brushSize}
             onChange={(e) => setBrushSize(Number(e.target.value))}
           />
-          <button onClick={() => setIsEraser(!isEraser)}>
+
+          <button onClick={toggleEraser}>
             {isEraser ? "Switch to Brush" : "Switch to Eraser"}
           </button>
 
-          <button onClick={clearCanvas}>Clear Canvas</button>
+          <button onClick={deleteSelectedObject}>Delete Object</button>
         </div>
         <canvas ref={canvasRef} />
       </div>
+
+      {/* **Save & Download Buttons** */}
       <div className="canvas-save-btn-wrapper">
         <h3>Save Everything!</h3>
-        <Button onClick={donwloadDrawing} color="secondary" size="small">
-          DownLoad
+        <Button onClick={downloadDrawing} color="secondary" size="small">
+          Download
         </Button>
-        <Button color="secondary" size="small" onClick={saveDrawing}>
+        <Button
+          color="secondary"
+          size="small"
+          onClick={() => setOpenSavePopup(true)}
+        >
           Save To Browser
         </Button>
       </div>
+
+      {openSavePopup && (
+        <NoteNamePopup
+          onSaveClick={saveDrawing}
+          onClose={() => setOpenSavePopup(false)}
+        />
+      )}
     </div>
   );
 };

@@ -28,6 +28,18 @@ const TextEditor = () => {
     );
   };
 
+  const saveNote = (noteName) => {
+    if (!noteName) return;
+
+    const newNote = {
+      id: Date.now(),
+      title: noteName,
+      note: text,
+    };
+
+    setStoredNotes((prevNotes) => [...prevNotes, newNote]);
+  };
+
   return (
     <div className="text-area-container">
       <textarea
@@ -57,7 +69,11 @@ const TextEditor = () => {
       </div>
 
       {showFileNamePopup && (
-        <NoteNamePopup note={text} onClose={() => setFileNamePopup(false)} />
+        <NoteNamePopup
+          note={text}
+          onSaveClick={saveNote}
+          onClose={() => setFileNamePopup(false)}
+        />
       )}
     </div>
   );

@@ -7,28 +7,35 @@ import SideBar from "./components/SideBar";
 import { NotesProvider } from "./contexts/notesContext";
 import { TextEditorProvider } from "./contexts/textEditorContext";
 import { DrawingProvider } from "./contexts/drawingContext";
+import { ModeProvider, useMode } from "./contexts/modeContext";
 
 const App = () => {
-  const [showDrawBoard, setShowDrawBoard] = useState(false);
-
-  const handleShowDrawBoard = () => {
-    setShowDrawBoard(!showDrawBoard);
-  };
+  const [selectedDrawing, setSelectedDrawing] = useState(null);
 
   return (
-    <div>
+    <ModeProvider>
       <NotesProvider>
         <TextEditorProvider>
-          <Header onShowDrawBoardClick={handleShowDrawBoard} />
-          <div className="app-container">
-            <SideBar />
-            <DrawingProvider>
-              {showDrawBoard ? <DrawingBoard /> : <TextEditor />}
-            </DrawingProvider>
-          </div>
+          <DrawingProvider>
+            <Header />
+            <div className="app-container">
+              <SideBar setSelectedDrawing={setSelectedDrawing} />
+              <MainContent selectedDrawing={selectedDrawing} />
+            </div>
+          </DrawingProvider>
         </TextEditorProvider>
       </NotesProvider>
-    </div>
+    </ModeProvider>
+  );
+};
+
+// Separate component for handling mode switching
+const MainContent = ({ selectedDrawing }) => {
+  const { mode } = useMode();
+  return mode === "drawing" ? (
+    <DrawingBoard selectedDrawing={selectedDrawing} />
+  ) : (
+    <TextEditor />
   );
 };
 
