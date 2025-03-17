@@ -10,11 +10,11 @@ const socket = io("http://localhost:4000");
 
 const DrawingBoard = ({ selectedDrawing }) => {
   const canvasRef = useRef(null);
+  const [openSavePopup, setOpenSavePopup] = useState(false);
   const [canvas, setCanvas] = useState(null);
   const [brushColor, setBrushColor] = useState("black");
   const [brushSize, setBrushSize] = useState(5);
   const [isEraser, setIsEraser] = useState(false);
-  const [openSavePopup, setOpenSavePopup] = useState(false);
   const { drawingData, setDrawingData } = useDrawing();
 
   useEffect(() => {
@@ -40,50 +40,43 @@ const DrawingBoard = ({ selectedDrawing }) => {
     };
   }, []);
 
-  // Load selected drawing
+  // Load selected drawing when it changes
   useEffect(() => {
     if (canvas && selectedDrawing) {
+      console.log("Loading Drawing:", selectedDrawing);
       canvas.clear();
-      canvas.loadFromJSON(selectedDrawing.drawing, () => {
-        canvas.renderAll();
-      });
+      canvas.loadFromJSON(
+        selectedDrawing.drawing,
+        () => {
+          canvas.renderAll();
+        },
+        function (o, object) {
+          object.set("selectable", true);
+        }
+      );
     }
   }, [selectedDrawing, canvas]);
 
-  // Enable eraser mode
-  const toggleEraser = () => {
-    if (!canvas) return;
-
-    if (!isEraser) {
-      // Activate eraser mode
-      canvas.isDrawingMode = true;
-      canvas.freeDrawingBrush.color = "white"; // Simulate erasing
-      canvas.freeDrawingBrush.width = brushSize + 10; // Slightly bigger eraser
-    } else {
-      // Switch back to normal brush mode
-      canvas.isDrawingMode = true;
-      canvas.freeDrawingBrush.color = brushColor;
-      canvas.freeDrawingBrush.width = brushSize;
-    }
-
-    setIsEraser(!isEraser);
-  };
-
-  // **NEW: Delete selected object**
-  const deleteSelectedObject = () => {
-    if (!canvas) return;
-
-    const activeObject = canvas.getActiveObject();
-    if (activeObject) {
-      canvas.remove(activeObject);
-      canvas.discardActiveObject();
-      canvas.requestRenderAll();
+  const clearCanvas = () => {
+    if (canvas) {
+      canvas.clear();
+      socket.emit("drawing-update", canvas.toJSON()); // Notify others
     }
   };
 
-  // **FIXED: Save Drawing**
+  const downloadDrawing = () => {
+    if (canvas) {
+      const dataURL = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "drawing.png";
+      link.click();
+    }
+  };
+
   const saveDrawing = (drawingName) => {
     if (!canvas) return;
+    setOpenSavePopup(true);
 
     const drawingJSON = canvas.toJSON();
     setDrawingData((prev) => [
@@ -91,29 +84,9 @@ const DrawingBoard = ({ selectedDrawing }) => {
       {
         id: Date.now(),
         name: drawingName,
-        drawing: drawingJSON, // Save as JSON
+        drawing: drawingJSON,
       },
     ]);
-
-    setOpenSavePopup(false);
-  };
-
-  // **FIXED: Download Drawing**
-  const downloadDrawing = () => {
-    if (canvas) {
-      // **Ensure latest render before downloading**
-      canvas.renderAll();
-
-      const dataURL = canvas.toDataURL({
-        format: "png",
-        quality: 1.0,
-      });
-
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = "drawing.png";
-      link.click();
-    }
   };
 
   return (
@@ -136,17 +109,14 @@ const DrawingBoard = ({ selectedDrawing }) => {
             value={brushSize}
             onChange={(e) => setBrushSize(Number(e.target.value))}
           />
-
-          <button onClick={toggleEraser}>
+          <button onClick={() => setIsEraser(!isEraser)}>
             {isEraser ? "Switch to Brush" : "Switch to Eraser"}
           </button>
 
-          <button onClick={deleteSelectedObject}>Delete Object</button>
+          <button onClick={clearCanvas}>Clear Canvas</button>
         </div>
         <canvas ref={canvasRef} />
       </div>
-
-      {/* **Save & Download Buttons** */}
       <div className="canvas-save-btn-wrapper">
         <h3>Save Everything!</h3>
         <Button onClick={downloadDrawing} color="secondary" size="small">
@@ -160,7 +130,6 @@ const DrawingBoard = ({ selectedDrawing }) => {
           Save To Browser
         </Button>
       </div>
-
       {openSavePopup && (
         <NoteNamePopup
           onSaveClick={saveDrawing}
