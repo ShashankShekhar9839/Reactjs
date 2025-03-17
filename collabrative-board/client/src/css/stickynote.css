@@ -1,0 +1,5 @@
+.sticky-notes-container {
+  width: 100%;
+  height: calc(100vh - 56px);
+  border: 1px solid red;
+}

@@ -1,0 +1,19 @@
+.side-bar {
+  flex: 0 0 15%;
+  height: calc(100vh - 76px);
+  border: 1px solid black;
+}
+
+.saved-names {
+  display: block;
+  height: 24px;
+  align-items: center;
+  display: flex;
+  margin: 4px 0;
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+}
+
+.saved-names:active {
+  background-color: azure;
+}
