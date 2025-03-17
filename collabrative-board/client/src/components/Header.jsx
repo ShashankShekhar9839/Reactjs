@@ -8,11 +8,15 @@ const Header = () => {
 
   return (
     <div className="header-container">
-      <Button
-        size="small"
-        onClick={() => setMode(mode === "text" ? "drawing" : "text")}
-      >
-        {mode === "text" ? "Switch to Drawing" : "Switch to Notes"}
+      <Button size="small" onClick={() => setMode("text")}>
+        Text Editor
+      </Button>
+      <Button size="small" onClick={() => setMode("stickyNotes")}>
+        StickyNotes
+      </Button>
+
+      <Button size="small" onClick={() => setMode("drawingBoard")}>
+        Drawing Board
       </Button>
     </div>
   );

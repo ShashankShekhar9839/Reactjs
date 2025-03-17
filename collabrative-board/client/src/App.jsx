@@ -8,31 +8,43 @@ import { NotesProvider } from "./contexts/notesContext";
 import { TextEditorProvider } from "./contexts/textEditorContext";
 import { DrawingProvider } from "./contexts/drawingContext";
 import { ModeProvider, useMode } from "./contexts/modeContext";
+import StickyNotes from "./components/StickyNotes";
+import initialNotes from "./data/notes";
 
 const App = () => {
-  const [selectedDrawing, setSelectedDrawing] = useState(null);
-
   return (
     <ModeProvider>
-      <NotesProvider>
-        <TextEditorProvider>
-          <DrawingProvider>
-            <Header />
-            <div className="app-container">
-              <SideBar setSelectedDrawing={setSelectedDrawing} />
-              <MainContent selectedDrawing={selectedDrawing} />
-            </div>
-          </DrawingProvider>
-        </TextEditorProvider>
-      </NotesProvider>
+      <Header />
+      <AppContent />
     </ModeProvider>
+  );
+};
+
+const AppContent = () => {
+  const { mode } = useMode();
+  const [selectedDrawing, setSelectedDrawing] = useState(null);
+  const [stickyNotes, setStickyNotes] = useState(initialNotes);
+
+  return mode === "stickyNotes" ? (
+    <StickyNotes notes={stickyNotes} setNotes={setStickyNotes} />
+  ) : (
+    <NotesProvider>
+      <TextEditorProvider>
+        <DrawingProvider>
+          <div className="app-container">
+            <SideBar setSelectedDrawing={setSelectedDrawing} />
+            <MainContent selectedDrawing={selectedDrawing} />
+          </div>
+        </DrawingProvider>
+      </TextEditorProvider>
+    </NotesProvider>
   );
 };
 
 // Separate component for handling mode switching
 const MainContent = ({ selectedDrawing }) => {
   const { mode } = useMode();
-  return mode === "drawing" ? (
+  return mode === "drawingBoard" ? (
     <DrawingBoard selectedDrawing={selectedDrawing} />
   ) : (
     <TextEditor />
