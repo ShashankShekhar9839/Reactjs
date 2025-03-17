@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import { useNotes } from "../contexts/notesContext";
+import "../css/notenamepopup.css";
 
 const NoteNamePopup = ({ note, onClose }) => {
   const [noteName, setNoteName] = useState("");
@@ -25,9 +26,15 @@ const NoteNamePopup = ({ note, onClose }) => {
   };
 
   return (
-    <div>
+    <div className="popup">
+      <div className="popup-close-btn">
+        <Button size="small" color="danger" onClick={onClose}>
+          Close
+        </Button>
+      </div>
+
       <Input placeholder="Enter Note Name" onChange={handleChange} />
-      <Button text="Save" onClick={saveNote} />
+      <Button text="Save" size="small" color="info" onClick={saveNote} />
     </div>
   );
 };

@@ -6,6 +6,7 @@ import "./App.css";
 import SideBar from "./components/SideBar";
 import { NotesProvider } from "./contexts/notesContext";
 import { TextEditorProvider } from "./contexts/textEditorContext";
+import { DrawingProvider } from "./contexts/drawingContext";
 
 const App = () => {
   const [showDrawBoard, setShowDrawBoard] = useState(false);
@@ -21,8 +22,9 @@ const App = () => {
           <Header onShowDrawBoardClick={handleShowDrawBoard} />
           <div className="app-container">
             <SideBar />
-            <TextEditor />
-            {showDrawBoard && <DrawingBoard />}
+            <DrawingProvider>
+              {showDrawBoard ? <DrawingBoard /> : <TextEditor />}
+            </DrawingProvider>
           </div>
         </TextEditorProvider>
       </NotesProvider>

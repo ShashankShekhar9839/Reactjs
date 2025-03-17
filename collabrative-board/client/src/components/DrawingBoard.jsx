@@ -3,6 +3,7 @@ import { fabric } from "fabric";
 import { io } from "socket.io-client";
 import "../css/canvas.css";
 import Button from "./Button";
+import { useDrawing } from "../contexts/drawingContext";
 
 const socket = io("http://localhost:4000"); // Change to your backend URL
 
@@ -12,11 +13,12 @@ const DrawingBoard = () => {
   const [brushColor, setBrushColor] = useState("black");
   const [brushSize, setBrushSize] = useState(5);
   const [isEraser, setIsEraser] = useState(false);
+  const { drawingData, setDrawingData } = useDrawing();
 
   useEffect(() => {
     const newCanvas = new fabric.Canvas(canvasRef.current);
-    newCanvas.setWidth(800);
-    newCanvas.setHeight(500);
+    newCanvas.setWidth(1024);
+    newCanvas.setHeight(window.innerHeight - 120);
     newCanvas.isDrawingMode = true;
     newCanvas.freeDrawingBrush.width = brushSize;
     newCanvas.freeDrawingBrush.color = brushColor;
@@ -80,38 +82,70 @@ const DrawingBoard = () => {
     }
   };
 
+  const saveDrawing = () => {
+    if (!canvas) return;
+
+    const drawingJSON = canvas.toJSON();
+    setDrawingData((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: "My Drawing",
+        drawing: drawingJSON, // Save as JSON
+      },
+    ]);
+  };
+
+  const loadDrawing = () => {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const drawingData = localStorage.getItem("drawing");
+
+    if (drawingData) {
+      const img = new Image();
+      img.src = drawingData;
+      img.onload = () => ctx.drawImage(img, 0, 0);
+    }
+  };
+
   return (
-    <div className="canvas-container">
+    <div className="canvas-main">
       {/* Brush Controls */}
-      <div>
-        <label>Brush Color:</label>
-        <input
-          type="color"
-          value={brushColor}
-          disabled={isEraser}
-          onChange={(e) => setBrushColor(e.target.value)}
-        />
+      <div className="canvas-container">
+        <div className="canvas-controls">
+          <label>Brush Color:</label>
+          <input
+            type="color"
+            value={brushColor}
+            disabled={isEraser}
+            onChange={(e) => setBrushColor(e.target.value)}
+          />
 
-        <label>Brush Size:</label>
-        <input
-          type="range"
-          min="1"
-          max="50"
-          value={brushSize}
-          onChange={(e) => setBrushSize(Number(e.target.value))}
-        />
+          <label>Brush Size:</label>
+          <input
+            type="range"
+            min="1"
+            max="50"
+            value={brushSize}
+            onChange={(e) => setBrushSize(Number(e.target.value))}
+          />
+          <button onClick={() => setIsEraser(!isEraser)}>
+            {isEraser ? "Switch to Brush" : "Switch to Eraser"}
+          </button>
 
-        {/* Eraser Toggle Button */}
-        <button onClick={() => setIsEraser(!isEraser)}>
-          {isEraser ? "Switch to Brush" : "Switch to Eraser"}
-        </button>
-
-        <button onClick={clearCanvas}>Clear Canvas</button>
+          <button onClick={clearCanvas}>Clear Canvas</button>
+        </div>
+        <canvas ref={canvasRef} />
       </div>
-
-      {/* Drawing Canvas */}
-      <canvas ref={canvasRef} />
-      <Button onClick={donwloadDrawing}>DownLoad</Button>
+      <div className="canvas-save-btn-wrapper">
+        <h3>Save Everything!</h3>
+        <Button onClick={donwloadDrawing} color="secondary" size="small">
+          DownLoad
+        </Button>
+        <Button color="secondary" size="small" onClick={saveDrawing}>
+          Save To Browser
+        </Button>
+      </div>
     </div>
   );
 };

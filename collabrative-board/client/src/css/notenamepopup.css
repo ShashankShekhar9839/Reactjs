@@ -1,0 +1,19 @@
+.popup {
+  position: fixed;
+  width: fit-content;
+  padding: 40px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(196, 192, 192);
+}
+
+.popup-close-btn {
+  position: relative;
+  left: 81%;
+  top: -32px;
+}
+
+.full-width {
+  width: 100%;
+}
