@@ -3,3 +3,12 @@
   height: calc(100vh - 56px);
   border: 1px solid red;
 }
+
+.add-stick-note-container {
+  display: flex;
+  width: 100%;
+  margin: 20px auto;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}

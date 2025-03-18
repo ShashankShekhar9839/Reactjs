@@ -1,6 +1,8 @@
 import { createRef, useEffect, useRef } from "react";
 import Note from "./Note";
 import "../css/stickynote.css";
+import Input from "./Input";
+import Button from "./Button";
 
 const StickyNotes = ({ notes = [], setNotes = () => {} }) => {
   useEffect(() => {
@@ -101,6 +103,12 @@ const StickyNotes = ({ notes = [], setNotes = () => {} }) => {
 
   return (
     <div className="sticky-notes-container">
+      <div className="add-stick-note-container">
+        <Input placeholder="add note" />
+        <Button size="small" color="secondary">
+          Add Note
+        </Button>
+      </div>
       {notes.map((note) => {
         return (
           <Note
