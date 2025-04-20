@@ -21,6 +21,7 @@ const useTicTacToe = () => {
     for (let i = 0; i < WINNING_PATTERNS.length; i++) {
       const [a, b, c] = WINNING_PATTERNS[i];
       if (
+        currentBoard[a] &&
         currentBoard[a] === currentBoard[b] &&
         currentBoard[a] === currentBoard[c]
       ) {
