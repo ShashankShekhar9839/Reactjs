@@ -64,7 +64,7 @@ const Tabs = ({
             onClick={() => handleChange(index + threshold)}
             tabIndex={index}
             key={child.key || index} // Use child.key if available
-            className={`${index === activeIndex ? "active" : ""}`}
+            className={`${index + threshold === activeIndex ? "active" : ""}`}
           >
             {label}
           </li>
