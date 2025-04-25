@@ -8,8 +8,6 @@ import { NotesProvider } from "./contexts/notesContext";
 import { TextEditorProvider } from "./contexts/textEditorContext";
 import { DrawingProvider } from "./contexts/drawingContext";
 import { ModeProvider, useMode } from "./contexts/modeContext";
-import StickyNotes from "./components/StickyNotes";
-import initialNotes from "./data/notes";
 
 const App = () => {
   return (
@@ -23,11 +21,8 @@ const App = () => {
 const AppContent = () => {
   const { mode } = useMode();
   const [selectedDrawing, setSelectedDrawing] = useState(null);
-  const [stickyNotes, setStickyNotes] = useState(initialNotes);
 
-  return mode === "stickyNotes" ? (
-    <StickyNotes notes={stickyNotes} setNotes={setStickyNotes} />
-  ) : (
+  return (
     <NotesProvider>
       <TextEditorProvider>
         <DrawingProvider>
