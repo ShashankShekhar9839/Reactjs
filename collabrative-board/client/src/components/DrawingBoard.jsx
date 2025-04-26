@@ -82,18 +82,6 @@ const DrawingBoard = ({ selectedDrawing }) => {
     setIsEraser(!isEraser);
   };
 
-  // **NEW: Delete selected object**
-  const deleteSelectedObject = () => {
-    if (!canvas) return;
-
-    const activeObject = canvas.getActiveObject();
-    if (activeObject) {
-      canvas.remove(activeObject);
-      canvas.discardActiveObject();
-      canvas.requestRenderAll();
-    }
-  };
-
   // **FIXED: Save Drawing**
   const saveDrawing = (drawingName) => {
     if (!canvas) return;
@@ -153,8 +141,6 @@ const DrawingBoard = ({ selectedDrawing }) => {
           <button onClick={toggleEraser}>
             {isEraser ? "Switch to Brush" : "Switch to Eraser"}
           </button>
-
-          <button onClick={deleteSelectedObject}>Delete Object</button>
         </div>
         <canvas ref={canvasRef} />
       </div>

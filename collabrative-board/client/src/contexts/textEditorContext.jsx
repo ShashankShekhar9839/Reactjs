@@ -27,7 +27,7 @@ export const TextEditorProvider = ({ children }) => {
   };
 
   return (
-    <TextEditorContext.Provider value={{ text, updateText }}>
+    <TextEditorContext.Provider value={{ text, updateText, setText }}>
       {children}
     </TextEditorContext.Provider>
   );

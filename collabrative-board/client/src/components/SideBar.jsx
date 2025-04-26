@@ -3,24 +3,30 @@ import "../css/sidebar.css";
 import { useNotes } from "../contexts/notesContext";
 import { useDrawing } from "../contexts/drawingContext";
 import { useMode } from "../contexts/modeContext";
+import { useTextEditor } from "../contexts/textEditorContext";
 
-const SideBar = ({ setSelectedDrawing }) => {
+const SideBar = ({ setSelectedDrawing, setShowSideBar }) => {
   const { storedNotes, setActiveNote } = useNotes();
+  const { setText } = useTextEditor();
   const { drawingData } = useDrawing();
-  const { mode } = useMode();
+  const { mode, setMode } = useMode(); // <-- bring setMode too
 
   const handleNoteClick = (id) => {
     const selectedNote = storedNotes.find((item) => item.id === id);
     if (selectedNote) {
       setActiveNote(selectedNote);
+      setText(selectedNote.note);
+      setMode("text"); // <-- SWITCH to text mode
+      setShowSideBar(false);
     }
   };
 
   const handleDrawingClick = (id) => {
     const selectedDrawing = drawingData.find((item) => item.id === id);
     if (selectedDrawing) {
-      console.log("Loading Drawing:", selectedDrawing);
-      setSelectedDrawing(selectedDrawing); // Send to App.jsx
+      setSelectedDrawing(selectedDrawing);
+      setMode("drawingBoard"); // <-- SWITCH to drawing mode
+      setShowSideBar(false);
     }
   };
 

@@ -18,34 +18,41 @@ const App = () => {
 
   return (
     <ModeProvider>
-      <Header
-        onHeaderMenuClick={onHeaderMenuClick}
-        isSideBarOpen={showSideBar}
-      />
-      <AppContent showSideBar={showSideBar} />
+      <NotesProvider>
+        <TextEditorProvider>
+          <DrawingProvider>
+            <Header
+              onHeaderMenuClick={onHeaderMenuClick}
+              isSideBarOpen={showSideBar}
+            />
+            <AppContent
+              showSideBar={showSideBar}
+              setShowSideBar={setShowSideBar}
+            />
+          </DrawingProvider>
+        </TextEditorProvider>
+      </NotesProvider>
     </ModeProvider>
   );
 };
 
-const AppContent = ({ showSideBar }) => {
+const AppContent = ({ showSideBar, setShowSideBar }) => {
   const { mode } = useMode();
   const [selectedDrawing, setSelectedDrawing] = useState(null);
 
   return (
-    <NotesProvider>
-      <TextEditorProvider>
-        <DrawingProvider>
-          <div className="app-container">
-            {showSideBar && <SideBar setSelectedDrawing={setSelectedDrawing} />}
-            <MainContent selectedDrawing={selectedDrawing} />
-          </div>
-        </DrawingProvider>
-      </TextEditorProvider>
-    </NotesProvider>
+    <div className="app-container">
+      {showSideBar && (
+        <SideBar
+          setSelectedDrawing={setSelectedDrawing}
+          setShowSideBar={setShowSideBar}
+        />
+      )}
+      <MainContent selectedDrawing={selectedDrawing} />
+    </div>
   );
 };
 
-// Separate component for handling mode switching
 const MainContent = ({ selectedDrawing }) => {
   const { mode } = useMode();
   return mode === "drawingBoard" ? (

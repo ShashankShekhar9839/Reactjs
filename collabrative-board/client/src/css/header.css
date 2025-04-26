@@ -1,6 +1,6 @@
 .header-container {
-  padding: 16px 10px;
-  background-color: #d5dbe4; /* slate-800 */
+  padding: 8px 10px;
+  background-color: #f8f8f8;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,9 +13,9 @@
   background-color: #334155; /* slate-700 */
   border-radius: 999px;
   gap: 0;
-  width: 150px;
+  width: 100px;
   max-width: 90vw;
-  height: 48px;
+  height: 40px;
   overflow: hidden;
 }
 
@@ -40,9 +40,9 @@
   position: absolute;
   height: 40px;
   width: 50%;
-  top: 4px;
+  top: 0px;
   left: 0;
-  background-color: #3b82f6; /* blue-500 */
+  background-color: #6c757d;
   border-radius: 999px;
   transition: transform 0.3s ease;
   z-index: 0;

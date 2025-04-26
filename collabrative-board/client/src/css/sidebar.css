@@ -2,6 +2,10 @@
   flex: 0 0 15%;
   height: calc(100vh - 76px);
   border: 1px solid black;
+  position: absolute;
+  width: 150px;
+  background-color: white;
+  z-index: 2;
 }
 
 .saved-names {

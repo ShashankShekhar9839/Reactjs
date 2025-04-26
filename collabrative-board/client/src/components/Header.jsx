@@ -1,14 +1,16 @@
 import React from "react";
 import "../css/header.css";
 import { useMode } from "../contexts/modeContext";
-import { Menu, X } from "lucide-react";
+import { Menu, X, CaseUpper, Brush } from "lucide-react";
 
 const Header = ({ onHeaderMenuClick, isSideBarOpen }) => {
   const { mode, setMode } = useMode();
 
   return (
     <div className="header-container">
-      <div className="menu-wrapper" onClick={onHeaderMenuClick}>{!isSideBarOpen ? <Menu /> : <X />}</div>
+      <div className="menu-wrapper" onClick={onHeaderMenuClick}>
+        {!isSideBarOpen ? <Menu /> : <X />}
+      </div>
 
       <div className="switch-container">
         <div
@@ -18,13 +20,13 @@ const Header = ({ onHeaderMenuClick, isSideBarOpen }) => {
           className={`switch-button ${mode === "text" ? "active" : ""}`}
           onClick={() => setMode("text")}
         >
-          Text Editor
+          <CaseUpper />
         </button>
         <button
           className={`switch-button ${mode === "drawingBoard" ? "active" : ""}`}
           onClick={() => setMode("drawingBoard")}
         >
-          Drawing Board
+          <Brush />
         </button>
       </div>
     </div>

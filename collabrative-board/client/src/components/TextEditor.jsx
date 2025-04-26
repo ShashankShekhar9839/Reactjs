@@ -4,7 +4,7 @@ import NoteNamePopup from "./NoteNamePopup";
 import { useTextEditor } from "../contexts/textEditorContext";
 import "../css/texteditor.css";
 import { useNotes } from "../contexts/notesContext";
-import { Download, Save } from "lucide-react";
+import { Download, Save, RotateCw } from "lucide-react";
 
 const TextEditor = () => {
   const { text, updateText } = useTextEditor();
@@ -62,8 +62,8 @@ const TextEditor = () => {
           <Save />
         </Button>
         {activeNote && (
-          <Button color="secondary" size="small" onClick={handleUpdateClick}>
-            Update
+          <Button color="secondary" size="large" onClick={handleUpdateClick}>
+            <RotateCw />
           </Button>
         )}
       </div>
