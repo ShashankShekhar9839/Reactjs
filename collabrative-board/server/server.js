@@ -37,4 +37,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(5173, () => console.log("Server running on port 5173"));
+const PORT = process.env.PORT || 5173;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// server.listen(5173, () => console.log("Server running on port 5173"));
