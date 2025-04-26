@@ -30,7 +30,7 @@ const DrawingBoard = ({ selectedDrawing }) => {
     // Send drawing data on change
     const sendDrawingData = () => {
       const drawingData = newCanvas.toJSON();
-      socket.emit("drawing-update", drawingData);
+      socket.emit("drawing-update", drawingData); // Emit updated drawing to the server
     };
 
     newCanvas.on("path:created", sendDrawingData);
@@ -82,7 +82,7 @@ const DrawingBoard = ({ selectedDrawing }) => {
     setIsEraser(!isEraser);
   };
 
-  // **FIXED: Save Drawing**
+  // **Save Drawing**
   const saveDrawing = (drawingName) => {
     if (!canvas) return;
 
@@ -99,7 +99,7 @@ const DrawingBoard = ({ selectedDrawing }) => {
     setOpenSavePopup(false);
   };
 
-  // **FIXED: Download Drawing**
+  // **Download Drawing**
   const downloadDrawing = () => {
     if (canvas) {
       // **Ensure latest render before downloading**
@@ -116,6 +116,37 @@ const DrawingBoard = ({ selectedDrawing }) => {
       link.click();
     }
   };
+
+  // Listen for drawing updates from other users
+  useEffect(() => {
+    socket.on("drawing-update", (newDrawingData) => {
+      if (canvas) {
+        canvas.loadFromJSON(newDrawingData, canvas.renderAll.bind(canvas));
+      }
+    });
+
+    return () => {
+      socket.off("drawing-update");
+    };
+  }, [canvas]);
+
+  // Initial drawing sync
+  useEffect(() => {
+    socket.on("init-drawing", (initialDrawingData) => {
+      if (canvas) {
+        canvas.clear();
+        initialDrawingData.forEach((drawing) => {
+          canvas.loadFromJSON(drawing, () => {
+            canvas.renderAll();
+          });
+        });
+      }
+    });
+
+    return () => {
+      socket.off("init-drawing");
+    };
+  }, [canvas]);
 
   return (
     <div className="canvas-main">
@@ -145,7 +176,7 @@ const DrawingBoard = ({ selectedDrawing }) => {
         <canvas ref={canvasRef} />
       </div>
 
-      {/* **Save & Download Buttons** */}
+      {/* Save & Download Buttons */}
       <div className="canvas-save-btn-wrapper">
         <Button onClick={downloadDrawing} color="secondary" size="large">
           <Download />

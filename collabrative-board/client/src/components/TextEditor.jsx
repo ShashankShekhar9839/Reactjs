@@ -1,16 +1,29 @@
-import React, { useState } from "react";
-import Button from "./Button";
-import NoteNamePopup from "./NoteNamePopup";
+import React, { useState, useEffect } from "react";
+import { io } from "socket.io-client";
 import { useTextEditor } from "../contexts/textEditorContext";
 import "../css/texteditor.css";
-import { useNotes } from "../contexts/notesContext";
+import Button from "./Button";
 import { Download, Save, RotateCw } from "lucide-react";
+
+const socket = io("https://collabrative-server-2.onrender.com/");
 
 const TextEditor = () => {
   const { text, updateText } = useTextEditor();
-  const { setStoredNotes, activeNote } = useNotes();
-
   const [showFileNamePopup, setFileNamePopup] = useState(false);
+
+  useEffect(() => {
+    socket.on("text-update", (newText) => {
+      updateText(newText); // Update text when received from other users
+    });
+
+    return () => {
+      socket.off("text-update");
+    };
+  }, [updateText]);
+
+  const handleUpdateClick = () => {
+    socket.emit("text-update", text); // Send updated text to the server
+  };
 
   const downLoadNotes = () => {
     if (!text) return;
@@ -19,14 +32,6 @@ const TextEditor = () => {
     link.href = URL.createObjectURL(blob);
     link.download = "text-editor-content.txt";
     link.click();
-  };
-
-  const handleUpdateClick = () => {
-    setStoredNotes((prev) =>
-      prev.map((note) =>
-        note.id === activeNote.id ? { ...note, note: text } : note
-      )
-    );
   };
 
   const saveNote = (noteName) => {
@@ -38,7 +43,7 @@ const TextEditor = () => {
       note: text,
     };
 
-    setStoredNotes((prevNotes) => [...prevNotes, newNote]);
+    // Save logic for the note (implement saving note here)
   };
 
   return (
@@ -61,16 +66,13 @@ const TextEditor = () => {
         >
           <Save />
         </Button>
-        {activeNote && (
-          <Button color="secondary" size="large" onClick={handleUpdateClick}>
-            <RotateCw />
-          </Button>
-        )}
+        <Button onClick={handleUpdateClick} color="secondary" size="large">
+          <RotateCw />
+        </Button>
       </div>
 
       {showFileNamePopup && (
         <NoteNamePopup
-          note={text}
           onSaveClick={saveNote}
           onClose={() => setFileNamePopup(false)}
         />
