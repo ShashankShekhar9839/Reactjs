@@ -1,22 +1,29 @@
 .canvas-main {
   display: flex;
   gap: 20px;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
 }
 
 .canvas-container {
   flex: 0 0 80%;
   border: 1px solid black;
+  width: calc(100vw - 30px);
 }
 
 .canvas-save-btn-wrapper {
+  margin-left: 20px;
   flex: 0 0 15%;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 40px;
 }
 
 .canvas-controls {
-  padding: 5px;
-  display: flex;
-  gap: 20px;
+  width: calc(100vw - 50px);
 }

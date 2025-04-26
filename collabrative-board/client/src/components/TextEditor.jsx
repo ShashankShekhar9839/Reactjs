@@ -4,6 +4,7 @@ import NoteNamePopup from "./NoteNamePopup";
 import { useTextEditor } from "../contexts/textEditorContext";
 import "../css/texteditor.css";
 import { useNotes } from "../contexts/notesContext";
+import { Download, Save } from "lucide-react";
 
 const TextEditor = () => {
   const { text, updateText } = useTextEditor();
@@ -50,16 +51,15 @@ const TextEditor = () => {
         placeholder="Start typing..."
       />
       <div className="text-editor-btn-containers">
-        <h3>Save Everything!</h3>
-        <Button onClick={downLoadNotes} color="secondary" size="small">
-          Download
+        <Button onClick={downLoadNotes} color="secondary" size="large">
+          <Download />
         </Button>
         <Button
           onClick={() => setFileNamePopup(true)}
           color="secondary"
-          size="small"
+          size="large"
         >
-          Save to Browser
+          <Save />
         </Button>
         {activeNote && (
           <Button color="secondary" size="small" onClick={handleUpdateClick}>

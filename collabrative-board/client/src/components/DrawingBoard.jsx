@@ -5,6 +5,7 @@ import "../css/canvas.css";
 import Button from "./Button";
 import { useDrawing } from "../contexts/drawingContext";
 import NoteNamePopup from "./NoteNamePopup";
+import { Download, Save } from "lucide-react";
 
 const socket = io("http://localhost:4000");
 
@@ -19,7 +20,7 @@ const DrawingBoard = ({ selectedDrawing }) => {
 
   useEffect(() => {
     const newCanvas = new fabric.Canvas(canvasRef.current);
-    newCanvas.setWidth(1024);
+    newCanvas.setWidth(window.innerWidth - 50);
     newCanvas.setHeight(window.innerHeight - 120);
     newCanvas.isDrawingMode = true;
     newCanvas.freeDrawingBrush.width = brushSize;
@@ -39,6 +40,18 @@ const DrawingBoard = ({ selectedDrawing }) => {
       newCanvas.dispose();
     };
   }, []);
+
+  useEffect(() => {
+    if (canvas) {
+      if (isEraser) {
+        canvas.freeDrawingBrush.color = "white";
+        canvas.freeDrawingBrush.width = brushSize + 10;
+      } else {
+        canvas.freeDrawingBrush.color = brushColor;
+        canvas.freeDrawingBrush.width = brushSize;
+      }
+    }
+  }, [brushColor, brushSize, isEraser, canvas]);
 
   // Load selected drawing
   useEffect(() => {
@@ -148,16 +161,15 @@ const DrawingBoard = ({ selectedDrawing }) => {
 
       {/* **Save & Download Buttons** */}
       <div className="canvas-save-btn-wrapper">
-        <h3>Save Everything!</h3>
-        <Button onClick={downloadDrawing} color="secondary" size="small">
-          Download
+        <Button onClick={downloadDrawing} color="secondary" size="large">
+          <Download />
         </Button>
         <Button
           color="secondary"
-          size="small"
+          size="large"
           onClick={() => setOpenSavePopup(true)}
         >
-          Save To Browser
+          <Save />
         </Button>
       </div>
 

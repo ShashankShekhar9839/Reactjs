@@ -3,22 +3,31 @@ import TextEditor from "./components/TextEditor";
 import DrawingBoard from "./components/DrawingBoard";
 import Header from "./components/Header";
 import "./App.css";
-import SideBar from "./components/SideBar";
 import { NotesProvider } from "./contexts/notesContext";
 import { TextEditorProvider } from "./contexts/textEditorContext";
 import { DrawingProvider } from "./contexts/drawingContext";
 import { ModeProvider, useMode } from "./contexts/modeContext";
+import SideBar from "./components/SideBar";
 
 const App = () => {
+  const [showSideBar, setShowSideBar] = useState(false);
+
+  const onHeaderMenuClick = () => {
+    setShowSideBar((prev) => !prev);
+  };
+
   return (
     <ModeProvider>
-      <Header />
-      <AppContent />
+      <Header
+        onHeaderMenuClick={onHeaderMenuClick}
+        isSideBarOpen={showSideBar}
+      />
+      <AppContent showSideBar={showSideBar} />
     </ModeProvider>
   );
 };
 
-const AppContent = () => {
+const AppContent = ({ showSideBar }) => {
   const { mode } = useMode();
   const [selectedDrawing, setSelectedDrawing] = useState(null);
 
@@ -27,7 +36,7 @@ const AppContent = () => {
       <TextEditorProvider>
         <DrawingProvider>
           <div className="app-container">
-            <SideBar setSelectedDrawing={setSelectedDrawing} />
+            {showSideBar && <SideBar setSelectedDrawing={setSelectedDrawing} />}
             <MainContent selectedDrawing={selectedDrawing} />
           </div>
         </DrawingProvider>

@@ -1,12 +1,15 @@
 import React from "react";
 import "../css/header.css";
 import { useMode } from "../contexts/modeContext";
+import { Menu, X } from "lucide-react";
 
-const Header = () => {
+const Header = ({ onHeaderMenuClick, isSideBarOpen }) => {
   const { mode, setMode } = useMode();
 
   return (
     <div className="header-container">
+      <div className="menu-wrapper" onClick={onHeaderMenuClick}>{!isSideBarOpen ? <Menu /> : <X />}</div>
+
       <div className="switch-container">
         <div
           className={`switch-slider ${mode === "drawingBoard" ? "right" : ""}`}
