@@ -1,7 +1,9 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("https://your-app-name.onrender.com", { autoConnect: false });
+const socket = io("https://collabrative-server-2.onrender.com/", {
+  autoConnect: false,
+});
 
 const TextEditorContext = createContext();
 
