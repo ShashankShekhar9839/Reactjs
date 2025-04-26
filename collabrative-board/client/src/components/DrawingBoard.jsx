@@ -7,7 +7,7 @@ import { useDrawing } from "../contexts/drawingContext";
 import NoteNamePopup from "./NoteNamePopup";
 import { Download, Save } from "lucide-react";
 
-const socket = io("http://localhost:4000");
+const socket = io("https://your-app-name.onrender.com");
 
 const DrawingBoard = ({ selectedDrawing }) => {
   const canvasRef = useRef(null);
