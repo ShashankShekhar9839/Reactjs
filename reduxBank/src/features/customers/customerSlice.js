@@ -1,6 +1,6 @@
 // notes related to theory of redux is present in accountSlice.js file
 
-// older way of react redux with redux toolkit
+// older way of react redux without redux toolkit
 
 const initialState = {
   fullName: "",
