@@ -1,10 +1,12 @@
 import React from "react";
 import TicTacToe from "./components/TicTacToe";
+import TicTacToeTwo from "./components/TicTacToeTwo";
 
 const App = () => {
   return (
     <div className="wrapper">
-      <TicTacToe />
+      {/* <TicTacToe /> */}
+      <TicTacToeTwo />
     </div>
   );
 };
